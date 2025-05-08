@@ -1,0 +1,218 @@
+// EmployePageHeader.jsx updated
+// EmployePageHeader.jsx
+import { PlusCircle, Upload } from "lucide-react";
+
+const EmployePageHeader = ({ activeTab, setActiveTab }) => {
+  const tabs = ["All Employees", "Teams", "Roles"];
+
+  return (
+    <div className="w-full px-4 md:px-10">
+      {/* Top row: Title + Buttons */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between pt-6 pb-4 space-y-4 md:space-y-0">
+        {/* Title + Count */}
+        <div className="flex items-center space-x-2 md:space-x-4">
+          <h2 className="text-xl md:text-2xl font-semibold text-black">Employees</h2>
+          <div className="bg-[#f1f1f1] text-[#34BC68] text-xs md:text-sm px-2 py-1 rounded-md font-medium">
+            100
+          </div>
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4 w-full md:w-auto">
+          <button className="flex items-center justify-center w-full md:w-auto px-4 py-2 border border-gray-300 text-black bg-white rounded-md text-sm font-medium cursor-pointer">
+            <Upload size={16} className="mr-2" />
+            Export
+          </button>
+          <button className="flex items-center justify-center w-full md:w-auto px-4 py-2 bg-[#34BC68] text-white rounded-md text-sm font-medium cursor-pointer">
+            <PlusCircle size={16} className="mr-2" />
+            New Employee
+          </button>
+        </div>
+      </div>
+
+      {/* Tab selection */}
+      <div className="flex flex-wrap md:space-x-6 space-x-4 pt-2 border-b border-[#f3eded] overflow-x-auto">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`text-sm font-medium pb-2 whitespace-nowrap ${
+              activeTab === tab
+                ? "text-[#34BC68] border-b-2 border-[#34BC68]"
+                : "text-black"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default EmployePageHeader;
+
+
+// EmployePageHeader.jsx
+// import { PlusCircle, Upload } from "lucide-react";
+
+// const EmployePageHeader = ({ activeTab, setActiveTab }) => {
+//   const tabs = ["All Employees", "Teams", "Roles"];
+
+//   return (
+//     <div className="w-full px-10">
+//       {/* Top row: Title + Buttons */}
+//       <div className="flex items-center justify-between pt-6 pb-4">
+//         {/* Title + Count */}
+//         <div className="flex items-center space-x-4">
+//           <h2 className="text-2xl font-semibold text-black">Employees</h2>
+//           <div className="bg-[#f1f1f1] text-[#34BC68] text-sm px-2 py-1 rounded-md font-medium">
+//             100
+//           </div>
+//         </div>
+
+//         {/* Action buttons */}
+//         <div className="flex items-center space-x-4">
+//           <button className="flex items-center px-4 py-2 border border-gray-300 text-black bg-white rounded-md text-sm font-medium cursor-pointer">
+//             <Upload size={16} className="mr-2" />
+//             Export
+//           </button>
+//           <button className="flex items-center px-4 py-2 bg-[#34BC68] text-white rounded-md text-sm font-medium cursor-pointer">
+//             <PlusCircle size={16} className="mr-2" />
+//             New Employee
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Tab selection */}
+//       <div className="flex space-x-6 pt-2 border-b border-[#f3eded]">
+//         {tabs.map((tab) => (
+//           <button
+//             key={tab}
+//             onClick={() => setActiveTab(tab)}
+//             className={`text-sm font-medium pb-2 ${
+//               activeTab === tab
+//                 ? "text-[#34BC68] border-b-2 border-[#34BC68]"
+//                 : "text-black"
+//             }`}
+//           >
+//             {tab}
+//           </button>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default EmployePageHeader;
+
+
+// import { PlusCircle, Upload } from "lucide-react";
+// import { useState } from "react";
+
+// const PageHeader = () => {
+//   const [activeTab, setActiveTab] = useState("All Employees");
+
+//   const tabs = ["All Employees", "Teams", "Roles"];
+
+//   return (
+//     <div className="w-full px-10">
+//       {/* Top row: Title + Buttons */}
+//       <div className="flex items-center justify-between pt-6 pb-4">
+//         {/* Title + Count */}
+//         <div className="flex items-center space-x-4">
+//           <h2 className="text-2xl font-semibold text-black">Employees</h2>
+//           <div className="bg-[#f1f1f1] text-[#34BC68] text-sm px-2 py-1 rounded-md font-medium">
+//             100
+//           </div>
+//         </div>
+
+//         {/* Action buttons */}
+//         <div className="flex items-center space-x-4">
+//           <button className="flex items-center px-4 py-2 border border-gray-300 text-black bg-white rounded-md text-sm font-medium cursor-pointer">
+//             <Upload size={16} className="mr-2" />
+//             Export
+//           </button>
+//           <button className="flex items-center px-4 py-2 bg-[#34BC68] text-white rounded-md text-sm font-medium cursor-pointer">
+//             <PlusCircle size={16} className="mr-2" />
+//             New Employee
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Tab selection */}
+//       <div className="flex space-x-6 pt-2 border-b border-[#f3eded]">
+//         {tabs.map((tab) => (
+//           <button
+//             key={tab}
+//             onClick={() => setActiveTab(tab)}
+//             className={`text-sm font-medium pb-2 ${
+//               activeTab === tab
+//                 ? "text-[#34BC68] border-b-2 border-[#34BC68]"
+//                 : "text-black"
+//             }`}
+//           >
+//             {tab}
+//           </button>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PageHeader;
+
+// import { PlusCircle, Upload } from "lucide-react";
+// import { useState } from "react";
+
+// const PageHeader = () => {
+//   const [activeTab, setActiveTab] = useState("All Employees");
+
+//   const tabs = ["All Employees", "Teams", "Roles"];
+
+//   return (
+//     <div className="w-full">
+//       {/* Top row: Title + Buttons */}
+//       <div className="flex items-center justify-between px-6 pt-6 pb-4">
+//         {/* Title + Count */}
+//         <div className="flex items-center space-x-4">
+//           <h2 className="text-2xl font-semibold text-black">Employees</h2>
+//           <div className="bg-[#f1f1f1] text-[#34BC68] text-sm px-3 py-1 rounded-md font-medium">
+//             100
+//           </div>
+//         </div>
+
+//         {/* Action buttons */}
+//         <div className="flex items-center space-x-4">
+//           <button className="flex items-center px-4 py-2 border border-gray-300 text-black bg-white rounded-md text-sm font-medium">
+//             <Upload size={16} className="mr-2" />
+//             Export
+//           </button>
+//           <button className="flex items-center px-4 py-2 bg-[#34BC68] text-white rounded-md text-sm font-medium">
+//             <PlusCircle size={16} className="mr-2" />
+//             New Employee
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Tab selection */}
+//       <div className="flex space-x-6 px-6 pt-2 border-b border-[#e7e4e4]">
+//         {tabs.map((tab) => (
+//           <button
+//             key={tab}
+//             onClick={() => setActiveTab(tab)}
+//             className={`text-sm font-medium pb-2 ${
+//               activeTab === tab
+//                 ? "text-[#34BC68] border-b-2 border-[#34BC68]"
+//                 : "text-black"
+//             }`}
+//           >
+//             {tab}
+//           </button>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PageHeader;
