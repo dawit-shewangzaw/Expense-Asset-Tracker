@@ -50,6 +50,10 @@ const NewRoleModal = ({ onClose }) => {
       setStep(2);
     }
   };
+  
+  const handleBack = () => {
+    setStep(1);
+  };
 
   const toggleUser = (user) => {
     setSelectedUsers((prev) =>
@@ -184,16 +188,16 @@ const NewRoleModal = ({ onClose }) => {
               <div className={`w-3 h-3 rounded-full ${step === 2 ? "bg-[#34BC68]" : "bg-gray-300"}`} />
             </div>
             {/* Buttons */}
-            <div className="flex justify-center space-x-3 mt-6">
+            <div className="flex justify-center gap-4">
               <button
                 onClick={onClose}
-                className="px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
+                className="px-12 md:px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
               >
                 Cancel
               </button>
               <button
                 onClick={handleContinue}
-                className="px-24 py-2 text-sm rounded-md bg-black text-white"
+                className="px-12 md:px-24 py-2 text-sm rounded-md bg-black text-white"
               >
                 Continue
               </button>
@@ -324,8 +328,8 @@ const NewRoleModal = ({ onClose }) => {
             {/* Footer buttons */}
             <div className="flex justify-center gap-4">
               <button
-                onClick={() => setStep(1)}
-                className="px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
+                onClick={handleBack}
+                className="px-12 md:px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
               >
                 Back
               </button>
@@ -340,7 +344,7 @@ const NewRoleModal = ({ onClose }) => {
                   });
                   onClose();
                 }}
-                className="px-24 py-2 text-sm rounded-md bg-black text-white"
+                className="px-12 md:px-24 py-2 text-sm rounded-md bg-black text-white"
               >
                 Confirm
               </button>

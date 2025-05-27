@@ -1,7 +1,7 @@
 import { useState } from "react";
 import EmployeeTable from "../component/EmployeeTable";
 import EmployePageHeader from "../component/EmployePageHeader";
-import Sidebar from "../component/sidebar";
+import Sidebar from "../component/Sidebar";
 import Topbar from "../component/Topbar";
 
 function Employe() {
@@ -11,12 +11,12 @@ function Employe() {
   return (
     <div className="flex h-screen bg-white relative">
       {/* Sidebar for desktop */}
-      <div className="hidden md:block w-[15%] h-full">
+      {/* <div className="hidden md:block w-[15%] h-full">
         <Sidebar
           isMobileSidebarOpen={isMobileSidebarOpen}
           setIsMobileSidebarOpen={setIsMobileSidebarOpen}
         />
-      </div>
+      </div> */}
 
       {/* Sidebar for mobile with animation */}
       <div

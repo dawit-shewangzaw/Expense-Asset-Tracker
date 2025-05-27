@@ -175,20 +175,21 @@ const AssignRoleModal = ({ onClose }) => {
         )}
 
         {/* Footer buttons */}
-        <div className="flex justify-center gap-4">
-          <button
-            onClick={onClose}
-            className="px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={onClose}
-            className="px-24 py-2 text-sm rounded-md bg-black text-white"
-          >
-            Confirm
-          </button>
-        </div>
+        {/* Buttons */}
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={onClose}
+              className="px-12 md:px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onClose}
+              className="px-12 md:px-24 py-2 text-sm rounded-md bg-black text-white"
+            >
+              Confirm
+            </button>
+          </div>
       </div>
     </div>
   );

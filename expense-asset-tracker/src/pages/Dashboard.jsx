@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Sidebar from "../component/sidebar";
+import Sidebar from "../component/Sidebar";
 import Topbar from "../component/Topbar";
 import DashboardComp from "../component/DashboardComp";
 import DashboardAssetAnalysis from "../component/DashboardAssetAnalysis";
@@ -10,14 +10,6 @@ function Dashboard() {
 
   return (
     <div className="flex h-screen bg-white relative">
-      {/* Sidebar for desktop */}
-      <div className="hidden md:block w-[15%] h-full">
-        <Sidebar
-          isMobileSidebarOpen={isMobileSidebarOpen}
-          setIsMobileSidebarOpen={setIsMobileSidebarOpen}
-        />
-      </div>
-
       {/* Sidebar for mobile with animation */}
       <div
         className={`fixed inset-0 z-50 transition-all duration-300 ease-in-out ${

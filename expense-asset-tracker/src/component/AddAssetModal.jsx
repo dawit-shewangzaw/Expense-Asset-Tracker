@@ -95,156 +95,155 @@ const AddAssetModal = ({ onClose }) => {
         </button>
 
         {step === 1 ? (
-          <>
-            {/* Icon */}
-            <div className="flex justify-center mb-4">
-              <div className="bg-[#e4f7ec] p-3 rounded-full">
-                <Briefcase size={22} className="text-[#34BC68]" />
-              </div>
-            </div>
+  <>
+    {/* Icon */}
+    <div className="flex justify-center mb-4">
+      <div className="bg-[#e4f7ec] p-3 rounded-full">
+        <Briefcase size={22} className="text-[#34BC68]" />
+      </div>
+    </div>
 
-            <h2 className="text-lg font-semibold text-center mb-1">Record New Asset</h2>
-            <p className="text-sm text-gray-600 text-center mb-6">
-              Invite employees to join this workspace and collaborate on managing assets efficiently.
-            </p>
-            {/* Form Inputs */}
-            <div className="space-y-4">
-              {/* Title */}
-                <label className="text-sm text-black font-medium">
-                  Title <span className="text-red-500">*</span>
-                </label>
-                <input
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="What is your title?"
-                  className={`w-full border ${
-                    errors.title ? "border-red-400" : "border-gray-300"
-                  } rounded-md py-2 px-3 text-sm outline-none`}
-                />
-              </div>
+    <h2 className="text-lg font-semibold text-center mb-1">Record New Asset</h2>
+    <p className="text-sm text-gray-600 text-center mb-6">
+      Invite employees to join this workspace and collaborate on managing assets efficiently.
+    </p>
 
-            {/* Model & Serial Number */}
-            <div className="flex space-x-4 mb-4">
-              <div className="w-1/2">
-                <label className="text-sm font-medium text-black">
-                  Model <span className="text-red-500">*</span>
-                </label>
-                <input
-                  value={model}
-                  onChange={(e) => setModel(e.target.value)}
-                  placeholder="Eg. Toshiba"
-                  className={`w-full border ${
-                    errors.model ? "border-red-400" : "border-gray-300"
-                  } rounded-md py-2 px-3 text-sm outline-none`}
-                />
-              </div>
-              <div className="w-1/2">
-                <label className="text-sm font-medium text-black">
-                  Serial Number <span className="text-red-500">*</span>
-                </label>
-                <input
-                  value={serialNumber}
-                  onChange={(e) => setSerialNumber(e.target.value)}
-                  placeholder="Eg. 235894"
-                  className={`w-full border ${
-                    errors.serialNumber ? "border-red-400" : "border-gray-300"
-                  } rounded-md py-2 px-3 text-sm outline-none`}
-                />
-              </div>
-            </div>
+    {/* Title */}
+    <div className="space-y-4">
+      <label className="text-sm text-black font-medium">
+        Title <span className="text-red-500">*</span>
+      </label>
+      <input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="What is your title?"
+        className={`w-full border ${
+          errors.title ? "border-red-400" : "border-gray-300"
+        } rounded-md py-2 px-3 text-sm outline-none`}
+      />
+    </div>
 
-            {/* Profile Image */}
-            <div className="mb-4">
-            <div className="flex justify-between items-start">
-              <label className="text-sm font-medium text-black">
-                Asset Image <span className="text-red-500">*</span>
-              </label>
+    {/* Model & Serial Number */}
+    <div className="flex flex-col sm:flex-row sm:space-x-4 mb-4 space-y-4 sm:space-y-0 mt-4">
+      <div className="w-full sm:w-1/2">
+        <label className="text-sm font-medium text-black">
+          Model <span className="text-red-500">*</span>
+        </label>
+        <input
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+          placeholder="Eg. Toshiba"
+          className={`w-full border ${
+            errors.model ? "border-red-400" : "border-gray-300"
+          } rounded-md py-2 px-3 text-sm outline-none`}
+        />
+      </div>
+      <div className="w-full sm:w-1/2">
+        <label className="text-sm font-medium text-black">
+          Serial Number <span className="text-red-500">*</span>
+        </label>
+        <input
+          value={serialNumber}
+          onChange={(e) => setSerialNumber(e.target.value)}
+          placeholder="Eg. 235894"
+          className={`w-full border ${
+            errors.serialNumber ? "border-red-400" : "border-gray-300"
+          } rounded-md py-2 px-3 text-sm outline-none`}
+        />
+      </div>
+    </div>
 
-              <div className="flex items-center space-x-5">
-                <div
-                  onClick={() => fileInputRef.current.click()}
-                  className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full border border-gray-300 cursor-pointer"
-                >
-                  {profileImage ? (
-                    <img
-                      src={profileImage}
-                      alt="Preview"
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  ) : (
-                    <ImageIcon size={20} className="text-gray-500" />
-                  )}
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                  />
-                </div>
+    {/* Profile Image */}
+    <div className="mb-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+        <label className="text-sm font-medium text-black mb-2 sm:mb-0">
+          Asset Image <span className="text-red-500">*</span>
+        </label>
 
-                <div
-                  onClick={() => fileInputRef.current.click()}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    const file = e.dataTransfer.files[0];
-                    if (file && file.type.startsWith("image/")) {
-                      setProfileImage(URL.createObjectURL(file));
-                    }
-                  }}
-                  className="w-70 border border-dashed border-gray-300 rounded-md p-2 cursor-pointer hover:border-[#6941C6] text-sm text-gray-500"
-                >
-                  <p className="leading-snug">
-                    <span className="text-[#6941C6] ">Click to upload</span> or drag and
-                    drop PNG or JPG (max. 800 x 400px)
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {errors.profileImage && (
-              <p className="text-sm text-red-500 mt-1">Profile image is required.</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+          <div
+            onClick={() => fileInputRef.current.click()}
+            className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full border border-gray-300 cursor-pointer"
+          >
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="Preview"
+                className="w-12 h-12 rounded-full object-cover"
+              />
+            ) : (
+              <ImageIcon size={20} className="text-gray-500" />
             )}
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
           </div>
 
-            {/* Description */}
-            <div>
-              <label className="text-sm font-medium text-black">
-                Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Add your description"
-                className={`w-full border ${
-                  errors.description ? "border-red-400" : "border-gray-300"
-                } rounded-md py-2 px-3 text-sm outline-none min-h-[100px]`}
-              />
-            </div>
+          <div
+            onClick={() => fileInputRef.current.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const file = e.dataTransfer.files[0];
+              if (file && file.type.startsWith("image/")) {
+                setProfileImage(URL.createObjectURL(file));
+              }
+            }}
+            className="w-full sm:w-64 border border-dashed border-gray-300 rounded-md p-2 cursor-pointer hover:border-[#6941C6] text-sm text-gray-500"
+          >
+            <p className="leading-snug">
+              <span className="text-[#6941C6]">Click to upload</span> or drag and drop PNG
+              or JPG (max. 800 x 400px)
+            </p>
+          </div>
+        </div>
+      </div>
+      {errors.profileImage && (
+        <p className="text-sm text-red-500 mt-1">Profile image is required.</p>
+      )}
+    </div>
 
-            {/* Step Circles */}
-            <div className="flex justify-center mb-4 space-x-2 mt-4">
-              <div className={`w-3 h-3 rounded-full ${step === 1 ? "bg-[#34BC68]" : "bg-gray-300"}`} />
-              <div className={`w-3 h-3 rounded-full ${step === 2 ? "bg-[#34BC68]" : "bg-gray-300"}`} />
-            </div>
+    {/* Description */}
+    <div>
+      <label className="text-sm font-medium text-black">
+        Description <span className="text-red-500">*</span>
+      </label>
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Add your description"
+        className={`w-full border ${
+          errors.description ? "border-red-400" : "border-gray-300"
+        } rounded-md py-2 px-3 text-sm outline-none min-h-[100px]`}
+      />
+    </div>
 
-            {/* Buttons */}
-            <div className="flex justify-center space-x-3 mt-4">
-              <button
-                onClick={onClose}
-                className="px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleContinue}
-                className="px-24 py-2 text-sm rounded-md bg-black text-white"
-              >
-                Continue
-              </button>
-            </div>
-          </>
+    {/* Step Circles */}
+    <div className="flex justify-center mb-4 space-x-2 mt-4">
+      <div className={`w-3 h-3 rounded-full ${step === 1 ? "bg-[#34BC68]" : "bg-gray-300"}`} />
+      <div className={`w-3 h-3 rounded-full ${step === 2 ? "bg-[#34BC68]" : "bg-gray-300"}`} />
+    </div>
+
+    {/* Buttons */}
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={onClose}
+          className="px-12 md:px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
+          >
+          Cancel
+        </button>
+        <button
+          onClick={handleContinue}
+          className="px-12 md:px-24 py-2 text-sm rounded-md bg-black text-white"
+          >
+          Continue
+          </button>
+      </div>
+    </>
         ) : (
           <>
             {/* Step 2 */}
@@ -393,13 +392,13 @@ const AddAssetModal = ({ onClose }) => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleBack}
-                className="px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
+                className="px-12 md:px-24 py-2 text-sm border border-gray-300 rounded-md bg-white text-black"
               >
                 Back
               </button>
               <button
                 onClick={onClose}
-                className="px-24 py-2 text-sm rounded-md bg-black text-white"
+                className="px-12 md:px-24 py-2 text-sm rounded-md bg-black text-white"
               >
                 Confirm
               </button>

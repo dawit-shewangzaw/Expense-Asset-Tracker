@@ -19,8 +19,26 @@ const EmployeeTable = () => {
   const usersPerPage = 4;
   const dropdownRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
 
+  // Toggle individual checkbox
+  const handleRowSelect = (index) => {
+    setSelectedRows((prev) =>
+      prev.includes(index)
+        ? prev.filter((i) => i !== index)
+        : [...prev, index]
+    );
+  };
 
+  // Toggle all checkboxes
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      const allIndexes = currentData.map((_, index) => index);
+      setSelectedRows(allIndexes);
+    } else {
+      setSelectedRows([]);
+    }
+  };
 
   const users = [
     {
@@ -120,26 +138,37 @@ const EmployeeTable = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-3 w-full md:w-auto">
-          <button className="flex items-center text-sm w-full md:w-auto px-4 py-2 bg-white border border-gray-300 text-black rounded-md">
-            <Filter size={16} className="mr-2" />
-            Filter
-          </button>
-          <button className="p-2 w-full md:w-auto rounded-md bg-[#F3F4F5] flex items-center justify-center">
-            <List size={18} className="text-black" />
-          </button>
-          <button className="p-2 w-full md:w-auto rounded-md bg-white border border-gray-300 flex items-center justify-center">
-            <LayoutGrid size={18} className="text-black" />
-          </button>
+          <div className="flex flex-wrap md:flex-row items-start md:items-center gap-2 md:space-y-0 md:space-x-3 w-full md:w-auto">
+            {/* Filter button - takes 50% in mobile */}
+            <button className="flex items-center text-sm w-[33%] md:w-auto px-4 py-2 bg-white border border-gray-300 text-black rounded-md">
+              <Filter size={16} className="mr-2" />
+              Filter
+            </button>
+
+            {/* List button - takes 25% in mobile */}
+            <button className="p-2 w-[30%] md:w-auto rounded-md bg-[#F3F4F5] flex items-center justify-center">
+              <List size={18} className="text-black" />
+            </button>
+
+            {/* Grid button - takes 25% in mobile */}
+            <button className="p-2 w-[30%] md:w-auto rounded-md bg-white border border-gray-300 flex items-center justify-center">
+              <LayoutGrid size={18} className="text-black" />
+            </button>
+          </div>
         </div>
-      </div>
 
       {/* Table */}
       <div className="mt-4 bg-white border border-gray-200 rounded-xl overflow-x-auto">
         <table className="w-full text-left text-sm min-w-[700px]">
           <thead className="bg-[#f8f8f8] text-gray-600">
             <tr>
-              <th className="px-4 py-3"><input type="checkbox" /></th>
+            <th  className="px-4 py-4">
+              <input
+                type="checkbox"
+                checked={selectedRows.length === currentData.length}
+                onChange={handleSelectAll}
+              />
+            </th>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Employee ID</th>
               <th className="px-4 py-3">Role</th>
@@ -151,7 +180,13 @@ const EmployeeTable = () => {
           <tbody className="text-black">
             {currentData.map((user, index) => (
               <tr key={index} className="border-t border-gray-200">
-                <td className="px-4 py-4"><input type="checkbox" /></td>
+                <td className="px-4 py-4">
+                <input
+                  type="checkbox"
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleRowSelect(index)}
+                />
+                </td>
                 <td className="px-4 py-4">
                   <div className="flex items-center space-x-3">
                     <div className="relative w-10 h-10">
@@ -210,78 +245,82 @@ const EmployeeTable = () => {
         </table>
 
         {/* Pagination */}
-        <div className="flex flex-col md:flex-row items-center justify-between px-6 py-4 border-t border-gray-200 text-sm text-gray-600 space-y-4 md:space-y-0">
-          {/* Previous */}
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            className="flex items-center px-3 py-1 border border-gray-300 bg-white rounded-md"
-            disabled={currentPage === 1}
-          >
-            <ArrowLeft size={16} className="mr-1" />
-            Previous
-          </button>
-
-          {/* Page Numbers */}
-          <div className="flex items-center space-x-2">
-            {(() => {
-              const pages = [];
-              const maxVisible = 6;
-              const start = Math.max(2, currentPage - 1);
-              const end = Math.min(totalPages - 1, currentPage + 1);
-
-              pages.push(
-                <button
-                  key={1}
-                  onClick={() => handlePageChange(1)}
-                  className={`px-3 py-[6px] text-sm rounded-md font-medium ${
-                    currentPage === 1 ? "bg-[#E1EDE6] text-black" : "text-black hover:bg-gray-100"
-                  }`}
-                >
-                  1
-                </button>
-              );
-              if (start > 2) pages.push(<span key="start-ellipsis">...</span>);
-              for (let i = start; i <= end; i++) {
-                pages.push(
-                  <button
-                    key={i}
-                    onClick={() => handlePageChange(i)}
-                    className={`px-3 py-[6px] text-sm rounded-md font-medium ${
-                      currentPage === i ? "bg-[#E1EDE6] text-black" : "text-black hover:bg-gray-100"
-                    }`}
-                  >
-                    {i}
-                  </button>
-                );
-              }
-              if (end < totalPages - 1) pages.push(<span key="end-ellipsis">...</span>);
-              if (totalPages > 1) {
-                pages.push(
-                  <button
-                    key={totalPages}
-                    onClick={() => handlePageChange(totalPages)}
-                    className={`px-3 py-[6px] text-sm rounded-md font-medium ${
-                      currentPage === totalPages ? "bg-[#E1EDE6] text-black" : "text-black hover:bg-gray-100"
-                    }`}
-                  >
-                    {totalPages}
-                  </button>
-                );
-              }
+        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 text-sm text-gray-600">
+            {/* Previous */}
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="flex items-center px-3 py-1 border border-gray-300 bg-white rounded-md"
+              disabled={currentPage === 1}
+            >
+              <ArrowLeft size={16} className="mr-1" />
+              Previous
+            </button>
+  
+            {/* Page Numbers */}
+            <div className="flex items-center space-x-2">
+              {(() => {
+                  const pages = [];
+                  const maxVisible = 6;
+                  const start = Math.max(2, currentPage - 1);
+                  const end = Math.min(totalPages - 1, currentPage + 1);
+  
+                  pages.push(
+                      <button
+                      key={1}
+                      onClick={() => handlePageChange(1)}
+                      className={`px-3 py-[6px] text-sm rounded-md font-medium ${
+                          currentPage === 1 ? "bg-[#E1EDE6] text-black" : "text-black hover:bg-gray-100"
+                      }`}
+                      >
+                      1
+                      </button>
+                  );
+                  if (start > 2) pages.push(<span key="start-ellipsis">...</span>);
+                  for (let i = start; i <= end; i++) {
+                      pages.push(
+                      <button
+                          key={i}
+                          onClick={() => handlePageChange(i)}
+                          className={`px-3 py-[6px] text-sm rounded-md font-medium ${
+                          currentPage === i ? "bg-[#E1EDE6] text-black" : "text-black hover:bg-gray-100"
+                          }`}
+                      >
+                          {i}
+                      </button>
+                      );
+                  }
+  
+                  if (end < totalPages - 1) pages.push(<span key="end-ellipsis">...</span>);
+  
+                  if (totalPages > 1) {
+                      pages.push(
+                      <button
+                          key={totalPages}
+                          onClick={() => handlePageChange(totalPages)}
+                          className={`px-3 py-[6px] text-sm rounded-md font-medium ${
+                          currentPage === totalPages ? "bg-[#E1EDE6] text-black" : "text-black hover:bg-gray-100"
+                          }`}
+                      >
+                          {totalPages}
+                      </button>
+                      );
+                  }
+  
               return pages;
-            })()}
+          })()}
+            </div>
+  
+            {/* Next */}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="flex items-center px-3 py-1 border border-gray-300 bg-white rounded-md"
+              disabled={currentPage === totalPages}
+            >
+              Next
+              <ArrowRight size={16} className="ml-1" />
+            </button>
           </div>
 
-          {/* Next */}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            className="flex items-center px-3 py-1 border border-gray-300 bg-white rounded-md"
-            disabled={currentPage === totalPages}
-          >
-            Next
-            <ArrowRight size={16} className="ml-1" />
-          </button>
-        </div>
       </div>
     </div>
   );

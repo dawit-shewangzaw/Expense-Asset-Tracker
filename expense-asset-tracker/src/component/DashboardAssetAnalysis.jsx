@@ -18,6 +18,26 @@ import {
     const [activeMenuIndex, setActiveMenuIndex] = useState(null);
     const dropdownRef = useRef(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedRows, setSelectedRows] = useState([]);
+    
+      // Toggle individual checkbox
+      const handleRowSelect = (index) => {
+        setSelectedRows((prev) =>
+          prev.includes(index)
+            ? prev.filter((i) => i !== index)
+            : [...prev, index]
+        );
+      };
+    
+      // Toggle all checkboxes
+      const handleSelectAll = (e) => {
+        if (e.target.checked) {
+          const allIndexes = currentData.map((_, index) => index);
+          setSelectedRows(allIndexes);
+        } else {
+          setSelectedRows([]);
+        }
+      };
 
     
   
@@ -138,49 +158,59 @@ import {
   
     return (
         <div className="px-6 py-6 space-y-6">
-      <div className="px-10 pt-3 bg-white border border-gray-200 rounded-xl p-6 shadow">
+        <div className="px-10 pt-3 bg-white border border-gray-200 rounded-xl p-6 shadow">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-black">Asset Analysis</h3>
           <p className="text-base text-gray-500 mt-1">Manage your assets and track current usage status across team</p>
         </div>
+        
         {/* Top action box */}
-        <div className="flex items-center justify-between bg-white border border-gray-200 px-4 py-2 rounded-xl">
-          {/* Search */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white border border-gray-200 px-4 py-2 rounded-xl space-y-4 md:space-y-0">
+        {/* Search */}
+        <div className="flex items-center w-full max-w-md bg-transparent">
+          <Search className="text-black mr-2" size={18} />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search Employee by name, role, ID or any related keywords"
+            className="text-sm outline-none placeholder-gray-500 bg-transparent w-full"
+          />
+        </div>
 
-          <div className="flex items-center w-full max-w-md bg-transparent">
-            <Search className="text-black mr-2" size={18} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Employee by name, role, ID or any related keywords"
-              className="text-sm outline-none placeholder-gray-500 bg-transparent w-full"
-            />
-          </div>
-  
-          {/* Buttons */}
-          <div className="flex items-center space-x-3">
-            <button className="flex items-center text-sm px-4 py-2 bg-white border border-gray-300 text-black rounded-md">
+        {/* Buttons */}
+          <div className="flex flex-wrap md:flex-row items-start md:items-center gap-2 md:space-y-0 md:space-x-3 w-full md:w-auto">
+            {/* Filter button - takes 50% in mobile */}
+            <button className="flex items-center text-sm w-[33%] md:w-auto px-4 py-2 bg-white border border-gray-300 text-black rounded-md">
               <Filter size={16} className="mr-2" />
               Filter
             </button>
-  
-            <button className="p-2 rounded-md bg-[#F3F4F5]">
+
+            {/* List button - takes 25% in mobile */}
+            <button className="p-2 w-[30%] md:w-auto rounded-md bg-[#F3F4F5] flex items-center justify-center">
               <List size={18} className="text-black" />
             </button>
-  
-            <button className="p-2 rounded-md bg-white border border-gray-300">
+
+            {/* Grid button - takes 25% in mobile */}
+            <button className="p-2 w-[30%] md:w-auto rounded-md bg-white border border-gray-300 flex items-center justify-center">
               <LayoutGrid size={18} className="text-black" />
             </button>
           </div>
         </div>
         
         {/* Table */}
-        <div className="mt-4 bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="mt-4 bg-white border border-gray-200 rounded-xl overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-[#f8f8f8] text-gray-600">
               <tr>
-                <th className="px-4 py-3"><input type="checkbox" /></th>
+                <th  className="px-4 py-4">
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.length === currentData.length}
+                    onChange={handleSelectAll}
+                  />
+                </th>
+                {/* <th className="px-4 py-3"><input type="checkbox" /></th> */}
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Asset ID</th>
                 <th className="px-4 py-3">Picture</th>
@@ -194,7 +224,15 @@ import {
   
               <tr key={index} className="border-t border-gray-200">
   
-                  <td className="px-4 py-4"><input type="checkbox" /></td>
+                  {/* <td className="px-4 py-4"><input type="checkbox" /></td> */}
+                  <td className="px-4 py-4">
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(index)}
+                      onChange={() => handleRowSelect(index)}
+                    />
+                  </td>
+
                   <td className="px-4 py-4">
                     <div className="flex items-center space-x-3">
                       <div>
@@ -226,10 +264,6 @@ import {
                     </a>
                   </td>
 
-
-                  {/* <td className="px-4 py-4">
-                    <div className="font-medium">{user.picture}</div>
-                  </td> */}
                   <td className="px-4 py-4">
                     <div
                       className={`inline-flex items-center bg-[#f0f0f0] text-xs px-3 py-1 rounded-full ${

@@ -1,5 +1,4 @@
 // Topbar.jsx
-// Topbar.jsx
 import { Bell, Settings, Search, Menu } from "lucide-react";
 import userImg from "../assets/kob.jpg";
 

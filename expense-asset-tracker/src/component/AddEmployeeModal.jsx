@@ -130,16 +130,17 @@ const AddEmployeeModal = ({ onClose }) => {
 
         {/* Footer buttons */}
         <div className="flex justify-center space-x-4 mt-8">
+          <div className="flex justify-center space-x-4 mt-8">
           <button
             onClick={onClose}
-            className="px-24 py-2 border border-gray-300 rounded-md text-sm text-black"
+            className="px-12 md:px-24 py-2 border border-gray-300 rounded-md text-sm text-black"
           >
-            Cancel
+            Cancel  
           </button>
           <button
             disabled={!isFormValid}
             onClick={onClose}
-            className={`px-24 py-2 rounded-md text-sm ${
+            className={`px-12 md:px-24 sm:px-18 py-2 rounded-md text-sm ${
               isFormValid
                 ? "bg-black text-white"
                 : "bg-gray-300 text-gray-600 cursor-not-allowed"
@@ -147,6 +148,8 @@ const AddEmployeeModal = ({ onClose }) => {
           >
             Confirm
           </button>
+        </div>
+
         </div>
       </div>
     </div>
